@@ -1,0 +1,177 @@
+Assigment_1_UNIX
+3:
+cat oasa-history > sheet.csv . I passed the data from oasa history to sheet.csv
+4:
+wc -l oasa-history . I used wc -l to count the lines of oasa-history
+5:
+tail -1 oasa-history. I used tail -1 to specify that i want the last row of the file
+6:
+awk -F , '{print $3}' oasa-history | sort | uniq -c | wc -l . Here i use awk. Awk
+grabs data for us. I specify that the column separator is a comma. For the third
+column of the data set i use the sort and after that the uniq -c. That way i will see
+in each line the frequency of the buss. Then i use wc -l to count the lines.
+7: awk -F , '{print $2}' oasa-history | sort | uniq -c | wc -l . same thing for a
+different column
+8:
+I take the date column and and i keep only the dates. Then i simply remove the
+duplicates and count the number of lines.
+awk -F ',' '{print $4}' oasa-history | awk -F ' ' '{print $1,$2,$3}' | sort | uniq | wc -l
+9: (τα παρακατω να τα τρεξω ενα ενα, σαν steps. Οχι σαν pipe.)
+First i output only the relevant columns in a new data frame:
+$ awk -F , '{print $2, $5, $6}' oasa-history > columns_2_5_6
+Secondly, we remove the duplicate rows because we want, later, to count for
+each route the UNIQUE positions.
+sort columns_2_5_6 | uniq > count_frequency_in_first_column
+Finally, i count the frequency of the first column. The first column shows the
+number of times that each route passes from a different position: The cut
+command gives only the relevant column that I specify. I specify it, -f1 so i will
+take only column 1 and after the d i specify the delimiter.
+$ cut -d' ' -f1 count_frequency_in_first_column | sort | uniq -c | sort -r | head
+10:
+First, i take the columns that i want to check for duplicate values:
+awk -F ',' '{print $5,$6}' oasa-history > columns_5_6
+Secondly, i count the duplicate combination of long and lat: The -d in the uniq
+will give me the duplicate rows. Wc -l will count the duplicate rows
+sort columns_5_6 | uniq -d | wc -l
+11:
+First i take only the column that i need:
+awk -F ',' '{print $3}' oasa-history > col_3
+Secondly, i take only the first 2 digits of the sequence of numbers:
+cut -c 1-2 col_3 > first_dig
+Finally, i take the uniq sequence of 2 digits with thei respective number of
+frequencies and i sort them. -c in the uniq will give me the frequency for each
+2digit.
+sort first_dig | uniq -c | sort
+12:
+Θελω να κανω Total Busses - Busses for Jan 26 2023
+1a να βρω τα total UNIQUE busses
+2ο na βρω τα total UNIQUE busses for Jan 26 2023
+3ο κανε αφαιρεση
+Firstly, i find the unique busses for Jan 26 2023. More specific, i use grep to filter
+the data and i use awk to fetch the 3rd column. Then i take the unique busses
+and i count them. We have 1191 busses working on Jan 26
+grep 'Jan 26 2023' oasa-history | awk -F ',' '{print $3}' | sort | uniq | wc -l
+Finally, i find the total busses that oasa. 1542 total busses can be found
+awk -F ',' '{print $3}' oasa-history | sort | uniq | wc -l
+13:
+i keep only the relevant columns and i remove the times. I also remove the
+duplicates. That way i have for each the the id of the busses. After that i use cut
+to keep only the date column and find the frequency of each day. Finally i keep
+only the last row, which is the day that most buses where used. :
+cut -d ',' -f3,4 oasa-history | sed 's/\(.*2023\).*/\1/' | sort | uniq | cut -d ',' -f2 | sort |
+uniq -c | sort | tail -1
+14:
+Firstly, I create an output containing for each route the unique buses that go
+through it. I use awk to do that. Then I pass the output to cut and count for each
+line number how many buses pass from this line.
+awk -F ',' '{print $2,$3}' sample-oasa-history | sort | uniq | cut -d ' ' -f1 | sort | uniq
+-c
+General TIP: uniq -c. Will give me the frequency for each element.
+Awk: grabs specific columns of a data set
+awk -F ' , ' '{print $1}' sample-oasa-history
+Cut: does the same thing think with awk with different syntax
+cut -d',' -f1 sample-oasa-history
+Grep: it is used to filter - find specific words ! it will output the full line!
+grep '4476' oasa-history
+Sed: it is used to make transformations
+$ sed 's/^2023-01-01/NEW_VALUE/g' lol
+Wc: counts lines, words, characters, if i use also -l it will give me the number of
+lines ONLY!
+Uniq -c : will give the uniq values with a frequency column for each value,
+The -c will give me the number of occurrences
+15:
+Firstly, i take only the busses and the date as hour.
+awk -F ',' '{print $3,$4}' sample-oasa-history | sort | awk -F ' ' '{print $1,$5}'
+> q15
+Secondly, i want to remove :17:48:000AM these strings. THEN i will count
+unique for each hour (e.g 12:). This will give me how many uniques busses have
+passed for each hour of day.
+Firstly, i take only the busses and the date as hour. Secondly, i want to remove
+:17:48:000AM these strings. THEN i will count unique for each hour (e.g 12:).
+Then,i remove anything after the : and i count for the 2cond column (the hours)
+the frequency of the hours. The frequency will be the number of unique buses
+that pass for each hour. Finally I sort and take the bigger number and the
+respective hour of the day. This is only for the AM.
+awk -F ',' '{print $3,$4}' oasa-history| sort | awk -F ' ' '{print $1,$5}' | grep '.*AM' |
+cut -d':' -f1 | awk -F ' ' '{print $2}' | sort | uniq -c | sort > AM_data
+Firstly, i take only the busses and the date as hour. Secondly, i want to remove
+:17:48:000AM these strings. THEN i will count unique for each hour (e.g 12:).
+Then,i remove anything after the : and i count for the 2cond column (the hours)
+the frequency of the hours. The frequency will be the number of unique buses
+that pass for each hour. Finally I sort and take the bigger number and the
+respective hour of the day. This is only for the PM.
+awk -F ',' '{print $3,$4}' oasa-history| sort | awk -F ' ' '{print $1,$5}' | grep '.*AM' |
+cut -d':' -f1 | awk -F ' ' '{print $2}' | sort | uniq -c | sort > PM_data
+16:
+Same as 15 but find the min value
+17:
+date -d "Jan 2 2023" "+%A"
+Ή λουπα ή να τα βαλω σε μια μεταβλητη
+$ awk -F ',' '{print $4}' sample-oasa-history | awk -F ' ' '{print $1,$2,$3}'
+$ while read line; do date -d "$line" "+%A" ; done < hahaha
+while read line; do date -d "$line" "+%A" ; done
+18:
+I just need to find then min and max values for the 2 coordinates:
+awk -F ',' '{print $5}' oasa-history | sort | head -1
+awk -F ',' '{print $5}' oasa-history | sort | tail -1
+awk -F ',' '{print $6}' oasa-history | sort | head -1
+awk -F ',' '{print $6}' oasa-history | sort | tail -1
+This is a correct syntax for loop:
+while read p; do echo "$p"; done < hahaha
+19:
+Firstly, I create 2 new files with the same number of rows as the oasa-history file.
+These files contain the lat and long of my favorite location
+yes "23.754520" | head -n 4349693 > long_fav
+yes "38.016083" | head -n 4349693 > lat_fav
+Secondly, i create a main file that contain bot lat and long
+paste -d ',' long_fav lat_fav > lat_long_fav
+Thirdly, i combine the oasa with the lat_long_fav file to a new file:
+paste -d ',' lat_long_fav oasa-history > new_oasa_history
+Fourthly, we find the euklidean distance
+awk -F ',' '{print sqrt(($1-$7)^2 + ($2-$8)^2)}' new_oasa_history
+Fifthly, I combine the two files:
+paste -d ',' new_oasa_history euklidean_distanc > extra_new_oasa_history
+Finally, we sort and take the first value from the head:
+awk -F ',' '{print $5,$7,$8,$9}' extra_new_oasa_history | sort -t' ' -k4 | head
+Euklidean distance formula:
+awk '{print sqrt(($1-$7)^2 + ($2-$8)^2)}' new_oasa_history
+sqrt((X1 - x2)^ + (y1-y2)^2)
+20:
+Firstly, i grab the data for the bus 46206. Then i grab only the relevant columns
+and i find the unique combination. Then i count the rows
+awk -F',' '$3 == "46206" {print}' oasa-history | awk -F ',' '{print $3,$5,$6}'| sort |
+uniq | wc -l
+21:
+We grab the data using the command from question 20. Then we take only the
+rows with PM and we sort. We take the last row
+awk -F',' '$3 == "46206" {print}' oasa-history | awk -F ',' '{print $3,$4,$5,$6}'| grep
+'.*PM' | sort | tail
+22:
+First we use part of the command from question 20. Then i keep only the bus id
+and the date column from which i keep only the month and day of month. Finally
+find i find the frequency of the busses for each day. I want the last row.
+awk -F',' '$3 == "46206" {print}' oasa-history | awk -F ',' -v OFS=',' '{print $3,$4}' |
+awk -F ' ' '{print $1,$2}' | sort | uniq -c | sort
+23:
+We use from previous question the command. But now, in the end, we find the
+uniq line numbers and we count them. We count the lines use wc -l
+awk -F',' '$3 == "46206" {print}' oasa-history | awk -F ',' -v OFS=',' '{print $2}' | sort
+| uniq | wc -l
+24:
+For each route of our bussi will count the busses that use this route. I keep only
+the routes and busses id. Finally i find the uniq busses id with the route that we
+have selected and i count them. I count the rows using wc -l. We put the inputs in
+a variable and we sum them.
+route1=$(awk -F',' '$2 == "2051" {print $2,$3}' oasa-history | sort | uniq | wc -l)
+route2=$(awk -F',' '$2 == "2052" {print $2,$3}' oasa-history | sort | uniq | wc -l)
+route3=$(awk -F',' '$2 == "2951" {print $2,$3}' oasa-history | sort | uniq | wc -l)
+route4=$(awk -F',' '$2 == "3028" {print $2,$3}' oasa-history | sort | uniq | wc -l)
+route5=$(awk -F',' '$2 == "3030" {print $2,$3}' oasa-history | sort | uniq | wc -l)
+route6=$(awk -F',' '$2 == "3610" {print $2,$3}' oasa-history | sort | uniq | wc -l)l
+route7=$(awk -F',' '$2 == "3611" {print $2,$3}' oasa-history | sort | uniq | wc -l)
+route8=$(awk -F',' '$2 == "4373" {print $2,$3}' oasa-history | sort | uniq | wc -l)
+route9=$(awk -F',' '$2 == "4382" {print $2,$3}' oasa-history | sort | uniq | wc -l)
+route10=$(awk -F',' '$2 == "4383" {print $2,$3}' oasa-history | sort | uniq | wc -l)
+Finally we sum them
+sum=$((route1 + route2 + route3 + route4 + route5 + route6 + route7 + route8 +
+route9 + route10))
