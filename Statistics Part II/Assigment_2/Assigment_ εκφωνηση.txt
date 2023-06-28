@@ -1,0 +1,31 @@
+Part I
+
+The first  part aims at creating a predictive model to classify whether Trump gor more than 50% of the votes. You have to use at least 3 distinct methods and to assess how good are the predictions made by your models.
+
+Part II
+
+The second part refers to clustering. Forget about the elections and the votes. You do not have to use them any further. 
+
+We split the variables in two groupd
+
+The demographics which are the variables 
+
+PST045214, PST040210, PST120214, POP010210,
+
+AGE135214, AGE295214, AGE775214, SEX255214,
+
+RHI125214, RHI225214, RHI325214, RHI425214,
+
+RHI525214, RHI625214, RHI725214, RHI825214,
+
+POP715213, POP645213, POP815213, EDU635213,
+
+EDU685213, VET605213
+
+and all the rest which we name "econimic related". 
+
+Here we want to use the "demographic related" variables to cluster the counties
+
+and then use  the "economic related" to describe the clusters you have found.
+
+You can use whatever method you like. You need to explain why you have selected the respective variables from the list to use and in general you need to describe in sufficient detail your approach.

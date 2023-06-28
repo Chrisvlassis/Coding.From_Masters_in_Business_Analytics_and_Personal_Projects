@@ -1,0 +1,9 @@
+The data refer to the elections for the candidates of both parties (Democrats and Republicans) for the presidential election of 2016. The data are given in two sheets in the attached Excel file. The one file has the socioeconomic characteristics of the counties and the second one the votes for the candidates.
+
+We want to create a model using as response whether Trump got more than 50% of the votes at each county for the Republicans, using as explanatory variables the socio-economic characteristics of the counties.
+
+We are interested to explain the behavior not to predict. You need to find a reasonable model selecting covariates and being able to use the model to explain the behavior of voters.
+
+Description of the variables is given in  separate sheet in the excel. 
+
+You have to write a detailed enough report to explain your findings, explaining the model you used together with sufficient technical details on what you have done.   Use tables and plots that really contribute to your story. Explain what other information you may need. It is important that the report is self-contained and if somebody reads it could follow the arguments even with limited statistical knowledge.

@@ -1,0 +1,7 @@
+This note is about the 'Code in R'
+
+Because of many back and forths, trying running the code from the top to the bottom as a programm
+will not work and will create many errors. I can send also the R workspace that contains all the models and dataFrames
+For any clarification i am in your disposal.
+
+In the Appendix section of the 'Paper' you can find all the most important material, output from R code, that is used in the paper.
