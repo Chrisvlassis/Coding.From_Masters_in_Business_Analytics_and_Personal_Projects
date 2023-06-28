@@ -8,3 +8,5 @@ For convenience we have created 4 main folders. Each folder is focused in one of
 4. Other important projects (algorythms & Business Processes)
 
 Also, for each project, there is a small file that contains a summary about the main goal of the project(not the solution). 
+
+## Note: Some of the projects maybe do not contain the questions or the data. This is because some of the questions were posted in platforms (which is now closed) and for the data they might were very large to import them in Gitgub. 
