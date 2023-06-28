@@ -6,3 +6,5 @@ For convenience we have created 4 main folders. Each folder is focused in one of
 2. Data Analysis & Visualization
 3. Statistics & Machine Learing
 4. Other important projects (algorythms & Business Processes)
+
+Also, for each project, there is a file that contains the summary of the project. 
