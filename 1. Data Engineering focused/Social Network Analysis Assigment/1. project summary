@@ -1,4 +1,5 @@
 The original data could not be uploaded since the size was over 60GB
+The original data are messy and needed cleaning. 
 The data that are found are those data that are produced after running the Python code for the integration & manipulation pipeline.
 
 After the python code has been runned we use R to analyze the tweeter posts with the use of Graphs.  
