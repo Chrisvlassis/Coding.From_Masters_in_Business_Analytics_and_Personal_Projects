@@ -1,0 +1,2 @@
+This file concerns only the mixed fruit dataset. Also, this file, contains the code about the augmentation,
+the transformation and the split into training, validation and test, of the annotated images from label studio.
